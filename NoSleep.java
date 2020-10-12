@@ -4,7 +4,7 @@ import java.awt.MouseInfo;
 import java.awt.AWTException;
 
 public class NoSleep {
-  public static final int STEP = 2;
+  public static final int MOUSE_STEP = 2;
   public static final int DELAY = 59000;
   public static final int DELAY_FACTOR = 4;
   
@@ -33,11 +33,15 @@ public class NoSleep {
   public void mouseMoveLoop() {
     while (true) {
       Point point = MouseInfo.getPointerInfo().getLocation();
-      int mouseX = (point.x < STEP) ? (point.x - STEP) : (point.x + STEP);
-      int mouseY = (point.y < STEP) ? (point.y - STEP) : (point.y + STEP);
+      int mouseX = makeCoordinate(point.x);
+      int mouseY = makeCoordinate(point.y);
       robot.mouseMove(mouseX, mouseY);
       delay();
     }
+  }
+  
+  private int makeCoordinate(int val) {
+    return (val < MOUSE_STEP) ? (val - MOUSE_STEP) : (val + MOUSE_STEP);
   }
   
   private void delay() {
